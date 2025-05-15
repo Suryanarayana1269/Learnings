@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Greet App</title>
+</head>
+<body>
+    <h1>Greet API</h1>
+    <input id="nameInput" placeholder="Enter Your Name"/>
+    <button onclick="sendGreeting()">Send</button>
+    <p id="responseText"></p>
+    <script>
+        function sendGreeting(){
+            const name = document.getElementById("nameInput").value;
+            
+            fetch("http://127.0.0.1:5000/greet",{
+                method: "POST",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({name:name})
+            })
+            .then(res=>res.json())
+            .then(data=>{
+                document.getElementById("responseText").innerText = data.message;
+            })
+            .catch(err=>{
+                document.getElementById("responseText").innerText = "Error: "+err;
+            })
+        };
+    </script>
+</body>
+</html>
